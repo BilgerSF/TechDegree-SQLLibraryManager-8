@@ -1,0 +1,28 @@
+{
+  "name": "techdegree-sqlibrarymanager-8",
+  "version": "1.0.0",
+  "description": "Application that manages a collection of books for a library",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BilgerSF/TechDegree-SQLLibraryManager-8.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BilgerSF/TechDegree-SQLLibraryManager-8/issues"
+  },
+  "homepage": "https://github.com/BilgerSF/TechDegree-SQLLibraryManager-8#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "nodemon": "^2.0.4",
+    "pug": "^3.0.0",
+    "sequelize": "^5.10.1",
+    "sqlite3": "^4.0.9"
+  }
+}
