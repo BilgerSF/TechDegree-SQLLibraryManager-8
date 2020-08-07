@@ -6,7 +6,7 @@ routes.js:
 
 //Import sequelize
 const db = require('../db');
-const { Lead } = db.models;
+const { Book } = db.models;
 const { Op } = db.Sequelize;
 
 //Import express module
@@ -14,35 +14,96 @@ const express = require('express');
 //Create router object
 const router = express();
 
+//Create Database records
+async function create(title,author,genre,year){
+   await db.sequelize.sync({ force: false });
+ 
+   try {
+    await Book.create({
+        title: title,
+        author: author, 
+        genre: genre,
+        year: year
+     });
+ 
+   } 
+   //Error Handling
+   catch (error) {
+     if (error.name === 'SequelizeValidationError') {
+       const errors = error.errors.map(err => err.message);
+       console.error('Validation errors: ', errors);
+     } else {
+       throw error;
+     }
+   }
+ };
+ 
+
+
 //.......Routes.......//
 
 //Redirects to /books route
 router.get('/',(req,res) =>{
-   res.render('error')
+   res.redirect('/books');
 })
-//Shows the full list of books by querying all the records from the database
-router.get('/books',(req,res) =>{
 
+//Shows the full list of books by querying all the records from the database
+router.get('/books', async (req,res) =>{
+   const books = await Book.findAll();
+   res.render('index',{bookss:books});
 });
+
 //Shows the create new book form
 router.get('/books/new',(req,res) =>{
-
+   res.render('new-book');
 });
+
 //Post a new book to the database
 router.post('/books/new',(req,res) =>{
-
+   const title = req.body.title;
+   const author = req.body.author;
+   const genre = req.body.genre;
+   const year = req.body.year;
+   create(title,author,genre,year);
+   res.redirect('/books')
 });
+
 //Shows books detail form
-router.get('/books/:id',(req,res) => {
-
+router.get('/books/:id',async (req,res) => {
+   const id = req.params.id; //dynamic id
+   const book = await Book.findByPk(id);
+   res.render('update-book',{bookk:book});
 })
+
 //Updates book info in the database
-router.post('/books/:id',(req,res) => {
-
+router.post('/books/:id',async (req,res) => {
+   const id = req.body.id;
+   console.log(id)
+   const title = req.body.title;
+   const author = req.body.author; 
+   const genre = req.body.genre;
+   const year =  req.body.year;
+   await Book.update({
+       title: title,
+       author: author,
+       genre: genre,
+       year: year
+   },{where:{id:id}});
+   res.redirect('/books')
 })
-//Deletes a book
-router.post('/books/:id/delete',(req,res) => {
 
+//Deletes a book
+router.post('/books/:id/delete', async (req,res) => {
+   const id = req.body.id;
+   const title = req.body.title;
+   const author = req.body.author; 
+   const genre = req.body.genre;
+   const year =  req.body.year;
+   await Book.destroy(
+      { 
+        where:{id:id} 
+      });
+   res.redirect('/books')
 })
 
 

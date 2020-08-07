@@ -11,7 +11,7 @@ const Sequelize = require('sequelize');
 //Create an instance and initiate the constructor
 const sequelize =  new Sequelize({
     dialect: 'sqlite',
-    storage: 'leads.db',
+    storage: 'library.db',
     logging: false
 });
 

@@ -21,14 +21,12 @@ app.use(bodyParser.urlencoded({extended:true}));
 //Load Static Middleware
 app.use(express.static('public'));
 
-//Use routes
-app.use(routes);
-
 //Set template engine (pug in this case)
 app.set('view engine', 'pug');
 
 
-
+//Use routes
+app.use(routes);
 
 //Error Handler; non existing route/request failure
 app.use( (req,res,next) => {
@@ -44,7 +42,6 @@ app.use((err,req,res,next) =>{
     res.render('error');
     console.error('Oh no!, this route does not exist',err);
 });
-
 
 
 

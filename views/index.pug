@@ -1,0 +1,32 @@
+extends layout.pug
+
+block content
+
+    h1 Books
+    p
+    a.button(href='books/new') Create New Book
+    br
+    br
+    table
+        thead
+          tr
+            th Title
+            th Author
+            th Genre
+            th Year
+        tbody
+         each val,index in bookss
+           tr
+            td
+             a(href= `books/${val.dataValues.id}`)|#{val.dataValues.title}
+            td
+             |#{val.dataValues.author}
+            td
+             |#{val.dataValues.genre}
+            td
+             |#{val.dataValues.year}   
+            
+              
+            
+        
+         

@@ -1,4 +1,6 @@
-extends layout
+extends layout.pug
 
-h1 Server Error
-p Sorry! There was an unexpected error on the server
+//Inherit layout.pug right here
+block content
+  h1 Server Error
+  p Sorry! There was an unexpected error on the server
