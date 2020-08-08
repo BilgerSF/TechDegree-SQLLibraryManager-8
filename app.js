@@ -39,7 +39,7 @@ app.use( (req,res,next) => {
 app.use((err,req,res,next) =>{
     res.locals.error = err;
     res.status(err.status);
-    res.render('error');
+    res.render('page-not-found');
     console.error('Oh no!, this route does not exist',err);
 });
 

@@ -25,10 +25,10 @@ module.exports = (sequelize) => {
         allowNull: false, //disallow null. field validation- title can not be null
         validate: {
           notNull: {
-            msg: 'Please provide a Title',
+            msg: 'Title is required',
           },
           notEmpty: {
-            msg: 'Please provide a Title',
+            msg: 'Title is required',
           },
         },
       },
@@ -38,10 +38,10 @@ module.exports = (sequelize) => {
         allowNull: false, //disallow null. field validation- title can not be null
         validate: {
           notNull: {
-            msg: 'Please provide an author',
+            msg: 'Author is required',
           },
           notEmpty: {
-            msg: 'Please provide an author',
+            msg: 'Author is required',
           },
         },
       },

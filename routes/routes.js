@@ -14,6 +14,8 @@ const express = require('express');
 //Create router object
 const router = express();
 
+let createOrError;
+
 //Create Database records
 async function create(title,author,genre,year){
    await db.sequelize.sync({ force: false });
@@ -32,6 +34,8 @@ async function create(title,author,genre,year){
      if (error.name === 'SequelizeValidationError') {
        const errors = error.errors.map(err => err.message);
        console.error('Validation errors: ', errors);
+       createOrError = errors;
+       return errors;
      } else {
        throw error;
      }
@@ -59,20 +63,39 @@ router.get('/books/new',(req,res) =>{
 });
 
 //Post a new book to the database
-router.post('/books/new',(req,res) =>{
+router.post('/books/new',async (req,res) =>{
    const title = req.body.title;
    const author = req.body.author;
    const genre = req.body.genre;
    const year = req.body.year;
-   create(title,author,genre,year);
-   res.redirect('/books')
+   //does not proceed until asynchronus operation has ended
+   await create(title,author,genre,year);
+   console.log(createOrError)
+   if(createOrError === undefined){
+      res.redirect('/books')   }
+   else{
+      res.render('new-book',{oops:'Oooops!',
+      err1:createOrError[0],
+      err2:createOrError[1],
+      genre:genre,
+      year:year
+   });
+     createOrError = undefined;
+   }
 });
 
 //Shows books detail form
 router.get('/books/:id',async (req,res) => {
    const id = req.params.id; //dynamic id
    const book = await Book.findByPk(id);
-   res.render('update-book',{bookk:book});
+   //Render book only if it was returned from database
+   if(book != null){
+      res.render('update-book',{bookk:book});
+    }
+   else{
+      res.render('error');
+      console.log('Sorry, that book does not exists on the database')
+   }
 })
 
 //Updates book info in the database
