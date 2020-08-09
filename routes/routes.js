@@ -17,6 +17,7 @@ const router = express();
 let createOrError;
 let allBooks;
 let pagenumber = 1;
+let searchWord = '';
 
 //Create Database records
 async function create(title,author,genre,year){
@@ -78,7 +79,7 @@ router.get('/books', async (req,res) =>{
    const books = await Book.findAll();
    allBooks = books;
    let booksLimited = limitBooks(books,1);
-   res.render('index',{bookss:booksLimited,page:pagenumber});
+   res.render('index',{bookss:booksLimited,page:pagenumber,searchWord:searchWord});
 });
 
 //Shows the create new book form
@@ -157,11 +158,13 @@ router.post('/books/:id/delete', async (req,res) => {
 //Exceeds Excpecations section
 //Pagination route
 router.get('/books/nxtPage/:n', (req,res) => {
+ 
    pagenumber = pagenumber + 1;
    console.log(pagenumber);
    let booksLimited = limitBooks(allBooks,pagenumber);
-   res.render('index',{bookss: booksLimited, page: pagenumber});
+   res.render('index',{bookss: booksLimited, page: pagenumber,searchWord:searchWord});
 })
+
 router.get('/books/prvPage/:n', (req,res) => {
 
    if(pagenumber > 1){
@@ -171,12 +174,36 @@ router.get('/books/prvPage/:n', (req,res) => {
          res.redirect('/books')
       }
       else{
-      res.render('index',{bookss: booksLimited, page: pagenumber});
+      res.render('index',{bookss: booksLimited, page: pagenumber,searchWord:searchWord});
       }
    }
 
 })
-
+//Search route
+router.post('/books',(req,res) =>{
+   searchWord = req.body.search;
+   let foundBooks = [];
+   allBooks.forEach(element => {
+         //Search for genre
+         if(element.genre.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())){
+            foundBooks.push(element);
+         } 
+         //Search for year
+         if(element.year.toString().includes(searchWord.toLocaleLowerCase()) ){
+            foundBooks.push(element);
+         }      
+         //Search for author
+         if(element.author.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase()) ){
+            foundBooks.push(element);
+         } 
+         //Search for title
+         if( element.title.toLocaleLowerCase().includes(searchWord.toLocaleLowerCase())){
+            foundBooks.push(element);
+         } 
+   });
+    res.render('index',{bookss:foundBooks,searchWord:searchWord});
+    searchWord = '';
+});
 
 
 module.exports = router;
