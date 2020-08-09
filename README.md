@@ -3,7 +3,7 @@
 # About
 The SQL library manager app is book a management system that allows user to create, update ,delete, and search books on/to a database(SQLite). This application was created by using the following technologies:
 
-Express.js: JavaScript implemented for handling all the GET/POST requests on node.js
+Express.js: JavaScript framework implemented for handling all the GET/POST requests on node.js
 
 Pug: Templating engine used for dynamically adding and rendering HTML to the client in an organized and effective manner.
 
