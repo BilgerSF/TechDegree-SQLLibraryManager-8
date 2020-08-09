@@ -10,10 +10,12 @@ Pug: Templating engine used for dynamically adding and rendering HTML to the cli
 Sequelize: ORM(Object Relational Mapping) used for connecting and creating records in SQLite database by using plain javascript .
 
 # Usage
+
 Install all required dependencies
-  npm install
+npm install
+
 Start the express server with
-  npm start
+npm start
  
 LocalHost:3000  
 
