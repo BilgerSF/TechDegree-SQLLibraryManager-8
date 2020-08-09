@@ -22,7 +22,6 @@ let searchWord = '';
 //Create Database records
 async function create(title,author,genre,year){
    await db.sequelize.sync({ force: false });
- 
    try {
     await Book.create({
         title: title,
@@ -53,16 +52,16 @@ async function create(title,author,genre,year){
   let indxEnd;
   //Books to display algorithm
   if(index > 1){
-   indxEnd = ( (10*index) + (index-1 ) );
-   indxStart = indxEnd-10;
+      indxEnd = ( (10*index) + (index-1 ) );
+      indxStart = indxEnd-10;
   }
   else{
      indxStart = 0;
      indxEnd = 10;
   }
-  booksListLimited = allBooks.slice(indxStart,indxEnd);
+     booksListLimited = allBooks.slice(indxStart,indxEnd);
    
-   return booksListLimited;
+       return booksListLimited;
 }
 
 
@@ -154,22 +153,27 @@ router.post('/books/:id/delete', async (req,res) => {
    res.redirect('/books')
 })
 
+//....Exceeds Excpecations section....//
 
-//Exceeds Excpecations section
-//Pagination route
+//.....Pagination routes......//
+
+//Next page
 router.get('/books/nxtPage/:n', (req,res) => {
- 
    pagenumber = pagenumber + 1;
    console.log(pagenumber);
+   //Display 10 books per page
    let booksLimited = limitBooks(allBooks,pagenumber);
    res.render('index',{bookss: booksLimited, page: pagenumber,searchWord:searchWord});
 })
 
+//Previous page
 router.get('/books/prvPage/:n', (req,res) => {
 
-   if(pagenumber > 1){
-   pagenumber = pagenumber - 1;
-   let booksLimited = limitBooks(allBooks,pagenumber);
+   //Limit changing the previous page once reached the fist page
+  if(pagenumber > 1){
+    pagenumber = pagenumber - 1;
+    //Display 10 books per page
+    let booksLimited = limitBooks(allBooks,pagenumber);
       if(pagenumber === 1){
          res.redirect('/books')
       }
@@ -179,7 +183,9 @@ router.get('/books/prvPage/:n', (req,res) => {
    }
 
 })
-//Search route
+
+//....Search route......//
+//
 router.post('/books',(req,res) =>{
    searchWord = req.body.search;
    let foundBooks = [];
@@ -201,6 +207,7 @@ router.post('/books',(req,res) =>{
             foundBooks.push(element);
          } 
    });
+    //Render the books that matched the searchword only
     res.render('index',{bookss:foundBooks,searchWord:searchWord});
     searchWord = '';
 });

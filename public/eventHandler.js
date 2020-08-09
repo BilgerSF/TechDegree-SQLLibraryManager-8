@@ -11,3 +11,8 @@ element.addEventListener('keydown',(e)=>{
     console.log(element.value.length)
 });
 
+//Hidde nav button when no more records
+let rows = document.querySelectorAll('td').length/4
+if(rows < 10){
+    document.querySelector('.nav').nextElementSibling.hidden = true;
+}
