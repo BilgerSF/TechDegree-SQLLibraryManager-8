@@ -15,6 +15,8 @@ const express = require('express');
 const router = express();
 
 let createOrError;
+let allBooks;
+let pagenumber = 1;
 
 //Create Database records
 async function create(title,author,genre,year){
@@ -42,6 +44,25 @@ async function create(title,author,genre,year){
    }
  };
  
+ //Controlls the amount of books to display
+  function limitBooks(allBooks,index){
+   
+  let booksListLimited = [];
+  let indxStart;
+  let indxEnd;
+  //Books to display algorithm
+  if(index > 1){
+   indxEnd = ( (10*index) + (index-1 ) );
+   indxStart = indxEnd-10;
+  }
+  else{
+     indxStart = 0;
+     indxEnd = 10;
+  }
+  booksListLimited = allBooks.slice(indxStart,indxEnd);
+   
+   return booksListLimited;
+}
 
 
 //.......Routes.......//
@@ -53,8 +74,11 @@ router.get('/',(req,res) =>{
 
 //Shows the full list of books by querying all the records from the database
 router.get('/books', async (req,res) =>{
+   pagenumber = 1;
    const books = await Book.findAll();
-   res.render('index',{bookss:books});
+   allBooks = books;
+   let booksLimited = limitBooks(books,1);
+   res.render('index',{bookss:booksLimited,page:pagenumber});
 });
 
 //Shows the create new book form
@@ -70,7 +94,7 @@ router.post('/books/new',async (req,res) =>{
    const year = req.body.year;
    //does not proceed until asynchronus operation has ended
    await create(title,author,genre,year);
-   console.log(createOrError)
+   //renders error if required fields were not completed
    if(createOrError === undefined){
       res.redirect('/books')   }
    else{
@@ -128,6 +152,31 @@ router.post('/books/:id/delete', async (req,res) => {
       });
    res.redirect('/books')
 })
+
+
+//Exceeds Excpecations section
+//Pagination route
+router.get('/books/nxtPage/:n', (req,res) => {
+   pagenumber = pagenumber + 1;
+   console.log(pagenumber);
+   let booksLimited = limitBooks(allBooks,pagenumber);
+   res.render('index',{bookss: booksLimited, page: pagenumber});
+})
+router.get('/books/prvPage/:n', (req,res) => {
+
+   if(pagenumber > 1){
+   pagenumber = pagenumber - 1;
+   let booksLimited = limitBooks(allBooks,pagenumber);
+      if(pagenumber === 1){
+         res.redirect('/books')
+      }
+      else{
+      res.render('index',{bookss: booksLimited, page: pagenumber});
+      }
+   }
+
+})
+
 
 
 module.exports = router;
