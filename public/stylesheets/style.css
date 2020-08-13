@@ -1,16 +1,16 @@
 body {
   padding: 10px 50px 50px;
   font: 17px 'Arial';
-  background-color: #494D5F;
+  background-color: #edeff0;
 
 }
 
 h1{
-color:#e7e7e7;
+color: #3659a2;
 }
 
 a {
-  color: #494D5F;
+  color:#edeff0;
   text-decoration: none;
   font-weight: bold;
   transition: 0.4s;
@@ -26,7 +26,9 @@ a.button, input[type=submit] {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   padding: 10px 14px 12px;
   font-size: 14px;
-  border-radius: 2px;
+  border-radius: 5px;
+  border: solid;
+  border-color: #3659a2;;;
   cursor: pointer;
 }
 
@@ -37,6 +39,7 @@ form a.button, input[type=submit] {
 
 input[type=submit] {
   border: 0;
+  border-color: #3659a2;
 }
 
   a.button:hover, input[type=submit]:hover {
@@ -63,21 +66,23 @@ th {
   border-bottom: 2px solid #D8B493;
   text-align: left;
   padding: 5px 20px 5px 10px;
-  color: #494D5F;
+  color: #edeff0;
 }
 
 tr {
   min-height: 50px;
-  background-color:#e7e7e7;
+  border-color:#3659a2;
+  background-color:#494D5F;
 }
 
 tr:nth-child(2n) {
-  background: #E7E7E7;
+  background: #3659a2;
 }
 
 td {
   padding: 5px 20px 5px 10px;
-  color:#494D5F;
+  color:#edeff0;
+  border-radius: 5px;
 }
 
 label {
@@ -85,7 +90,7 @@ label {
   min-width: 130px;
   display: inline-block;
   transition: 0.4s;
-  color:#E7E7E7;
+  color:#494D5F;
 }
 
 input {
@@ -93,7 +98,8 @@ input {
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   font-size: 14px;
   border-radius: 2px;
-  border-color: #E7E7E7;
+  border:solid;
+  border-color:#3659a2;
   transition: 0.4s;
 }
 
@@ -107,8 +113,8 @@ input[type=text] {
 }
 
 .nav{
-  color:#494D5F;
-  background: #e7e7e7;
+  color: #edeff0;
+  background: #3659a2;
   font-family: "Lucida Grande", Helvetica, Arial, sans-serif;
   padding: 5px 15px 5px;
   margin:5px;
@@ -126,7 +132,11 @@ input[type=text] {
   height:10px;
   display: flex;
   background-color: #e7e7e7;
-  border-color: #e7e7e7;
+  border-color: #3659a2;;
+}
+.search:hover{
+  border-color: green;
+  background-color: white;
 }
 
 li{
@@ -138,9 +148,13 @@ li{
   bottom:106px;
   height:35px;
   width:40px;
-  border-color: #e7e7e7;
+  border-color:#3659a2;
   display: flex;
   border-radius: 4px;
+  
+}
+.submit:hover{
+  background-color: #3659a2;
 }
 
 table{

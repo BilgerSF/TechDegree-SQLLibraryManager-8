@@ -188,6 +188,7 @@ router.get('/books/prvPage/:n', (req,res) => {
 //
 router.post('/books',(req,res) =>{
    searchWord = req.body.search;
+   if(searchWord.length > 0){
    let foundBooks = [];
    allBooks.forEach(element => {
          //Search for genre
@@ -210,6 +211,13 @@ router.post('/books',(req,res) =>{
     //Render the books that matched the searchword only
     res.render('index',{bookss:foundBooks,searchWord:searchWord});
     searchWord = '';
+}
+
+else{
+   res.redirect('/books')
+}
+   
+    
 });
 
 
