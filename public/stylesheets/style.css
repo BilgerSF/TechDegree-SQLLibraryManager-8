@@ -103,6 +103,10 @@ input {
   transition: 0.4s;
 }
 
+input:hover{
+  border-color:green;
+}
+
 input[type=text] {
   margin-left: 7px;
   width: 300px;
