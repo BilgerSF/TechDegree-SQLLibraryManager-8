@@ -19,6 +19,8 @@ let allBooks;
 let pagenumber = 1;
 let searchWord = '';
 
+
+
 //Create Database records
 async function create(title,author,genre,year){
    await db.sequelize.sync({ force: false });
@@ -65,7 +67,8 @@ async function create(title,author,genre,year){
 }
 
 
-//.......Routes.......//
+
+//......................................Routes..................................//
 
 //Redirects to /books route
 router.get('/',(req,res) =>{
@@ -83,7 +86,7 @@ router.get('/books', async (req,res) =>{
 
 //Shows the create new book form
 router.get('/books/new',(req,res) =>{
-   res.render('new-book');
+   res.render('new-book',{genre:'',year:'',author:'',title:''});
 });
 
 //Post a new book to the database
@@ -101,6 +104,8 @@ router.post('/books/new',async (req,res) =>{
       res.render('new-book',{oops:'Oooops!',
       err1:createOrError[0],
       err2:createOrError[1],
+      title:title,
+      author:author,
       genre:genre,
       year:year
    });
@@ -111,7 +116,7 @@ router.post('/books/new',async (req,res) =>{
 //Shows books detail form
 router.get('/books/:id',async (req,res) => {
    const id = req.params.id; //dynamic id
-   const book = await Book.findByPk(id);
+   let book = await Book.findByPk(id);
    //Render book only if it was returned from database
    if(book != null){
       res.render('update-book',{bookk:book});
@@ -125,11 +130,14 @@ router.get('/books/:id',async (req,res) => {
 //Updates book info in the database
 router.post('/books/:id',async (req,res) => {
    const id = req.body.id;
-   console.log(id)
    const title = req.body.title;
    const author = req.body.author; 
    const genre = req.body.genre;
    const year =  req.body.year;
+   let fill = {dataValues:{author:'',title:'',genre:'',year:'',id:''}};
+   let errMessages = [];
+ // try to update book form
+  try{
    await Book.update({
        title: title,
        author: author,
@@ -137,6 +145,21 @@ router.post('/books/:id',async (req,res) => {
        year: year
    },{where:{id:id}});
    res.redirect('/books')
+// display error message if the book form does not have a title and author data
+  }
+  catch(error){
+      error.errors.forEach((error)=>{
+         errMessages.push(error.message)
+      })
+     
+      fill.dataValues.author = author;
+      fill.dataValues.title = title;
+      fill.dataValues.genre = genre;
+      fill.dataValues.year = year;
+      fill.dataValues.id = id;
+      res.render('update-book',{titleError:errMessages[0],authorError:errMessages[1],oops:"Oooops!",bookk:fill});    
+  }
+  
 })
 
 //Deletes a book

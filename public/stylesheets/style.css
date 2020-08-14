@@ -38,7 +38,8 @@ form a.button, input[type=submit] {
 }
 
 input[type=submit] {
-  border: 0;
+  border: 1px;
+  border:solid;
   border-color: #3659a2;
 }
 

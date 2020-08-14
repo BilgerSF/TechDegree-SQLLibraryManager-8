@@ -3,7 +3,12 @@ extends layout.pug
 block content
 
   h1 Update Book
-  form(action='/books/:id', method = 'post')
+  form(action=`/books/${bookk.dataValues.id}`, method = 'post')
+    h2.error #{oops}
+    ul.error
+     li #{titleError}
+     br
+     li #{authorError}
     p
         label(for='title') Title
         input#title(name='title', type='text', value=`${bookk.dataValues.title}`)
