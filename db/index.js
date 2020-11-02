@@ -10,14 +10,9 @@ index.js:
 const Sequelize = require('sequelize');
 //Create an instance and initiate the constructor
 //storage: 'library.db' SQLITE  
-const sequelize =  new Sequelize({
-    dialect: 'mysql',
+const sequelize =  new Sequelize('heroku_a85609d2d0b8c1b','b81b82c8876c8e','0f7dca31',{
     host: 'us-cdbr-east-02.cleardb.com',
-    username:'b81b82c8876c8e',
-    password:'0f7dca31',
-    database:'heroku_a85609d2d0b8c1b',
-    port:3306,
-    logging: false
+    dialect:'mysql'
 });
 
 const db = {
