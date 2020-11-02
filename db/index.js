@@ -22,6 +22,10 @@ const db = {
 }
 
 db.models.Book =  require('./models/Book.js')(sequelize);
+sequelize.sync({force:true})
+.then(()=>{
+   console.log('tables have been synchronized');
+})
 
 module.exports = db;
 
