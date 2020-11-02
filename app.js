@@ -14,7 +14,8 @@ const routes = require('./routes/routes')
 
 //Create an express app
 const app = express();
-
+//Server port
+const PORT = process.env.PORT || 3000;
 //.....MiddleWares...//
 //load body-parser for incorming URL encoded data
 app.use(bodyParser.urlencoded({extended:true}));
@@ -48,6 +49,6 @@ app.use((err,req,res,next) =>{
 
 
 //LocalHost- Listen to port 3000
-app.listen(3000,function(){
+app.listen(PORT,function(){
     console.log('The app is listening to port 3000')
 });
