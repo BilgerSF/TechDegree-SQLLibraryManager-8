@@ -4,7 +4,6 @@ app.js sets up an express server:
 - Middlewares
 - Template engine
 */
-
 //Import express module
 const express =  require('express');
 //Import express built in body-parser
@@ -51,4 +50,6 @@ app.use((err,req,res,next) =>{
 //LocalHost- Listen to port 3000
 app.listen(PORT,function(){
     console.log('The app is listening to port 3000')
+    //Create database table when the server starts
+
 });
