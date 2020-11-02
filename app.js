@@ -14,7 +14,7 @@ const routes = require('./routes/routes')
 
 //Create an express app
 const app = express();
-//Server port
+//Server portt
 const PORT = process.env.PORT || 3000;
 //.....MiddleWares...//
 //load body-parser for incorming URL encoded data
