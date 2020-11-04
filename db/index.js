@@ -22,7 +22,7 @@ const db = {
 }
 
 db.models.Book =  require('./models/Book.js')(sequelize);
-sequelize.sync({force:true})
+sequelize.sync({force:false})
 .then(()=>{
    console.log('tables have been synchronized');
 })
